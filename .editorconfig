@@ -4,3 +4,9 @@ root = true
 
 # SA1633: File should have header
 dotnet_diagnostic.SA1633.severity = none
+
+# SA1629: Documentation text should end with a period
+dotnet_diagnostic.SA1629.severity = none
+
+# SA1200: Using directives should be placed correctly
+dotnet_diagnostic.SA1200.severity = none
