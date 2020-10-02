@@ -61,5 +61,45 @@ namespace Hancock
         /// </summary>
         [JsonPropertyName("x5t#S256")]
         public string X509CertificateSHA256Thumbprint { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the elliptical curve X coordinate
+        /// </summary>
+        [JsonPropertyName("x")]
+        public string X { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the elliptical curve Y coordinate
+        /// </summary>
+        [JsonPropertyName("y")]
+        public string Y { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the JWS curve name
+        /// </summary>
+        [JsonPropertyName("crv")]
+        public string CurveName { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the RSA encryption modulus
+        /// </summary>
+        [JsonPropertyName("n")]
+        public string Modulus { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the RSA encryption exponent
+        /// </summary>
+        [JsonPropertyName("e")]
+        public string Exponent { get; set; }
+
+        public string D { get; set; }
+
+        public string P { get; set; }
+
+        public string DP { get; set; }
+
+        public string DQ { get; set; }
+
+        public string QI { get; set; }
     }
 }
