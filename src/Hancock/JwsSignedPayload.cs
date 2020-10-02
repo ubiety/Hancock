@@ -1,5 +1,7 @@
-namespace Hancock {
-    public class JwsSignedPayload {
+namespace Hancock
+{
+    public class JwsSignedPayload
+    {
         public object Header { get; init; }
 
         public string Protected { get; init; }
