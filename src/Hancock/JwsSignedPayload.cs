@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Hancock
 {
     /// <summary>
@@ -24,5 +26,17 @@ namespace Hancock
         ///     Gets the JWS signature
         /// </summary>
         public string Signature { get; init; }
+
+        /// <summary>
+        ///     Gets a compact serialization of the signed payload
+        /// </summary>
+        [JsonIgnore]
+        public string Compact
+        {
+            get
+            {
+                return $"{Protected}.{Payload}.{Signature}";
+            }
+        }
     }
 }

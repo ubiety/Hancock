@@ -92,14 +92,40 @@ namespace Hancock
         [JsonPropertyName("e")]
         public string Exponent { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the RSA private exponent
+        /// </summary>
+        [JsonPropertyName("d")]
         public string D { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the RSA prime 1
+        /// </summary>
+        [JsonPropertyName("p")]
         public string P { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the RSA exponent 1
+        /// </summary>
+        [JsonPropertyName("dp")]
         public string DP { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the RSA exponent 2
+        /// </summary>
+        [JsonPropertyName("dq")]
         public string DQ { get; set; }
 
-        public string QI { get; set; }
+        /// <summary>
+        ///     Gets or sets the RSA coefficient
+        /// </summary>
+        [JsonPropertyName("qi")]
+        public string InverseQ { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the RSA prime 2
+        /// </summary>
+        [JsonPropertyName("q")]
+        public string Q { get; set; }
     }
 }

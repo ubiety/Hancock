@@ -94,6 +94,12 @@ namespace Hancock
                 {
                     Modulus = Base64Helper.SafeDecode(value.Modulus),
                     Exponent = Base64Helper.SafeDecode(value.Exponent),
+                    D = Base64Helper.SafeDecode(value.D),
+                    DP = Base64Helper.SafeDecode(value.DP),
+                    DQ = Base64Helper.SafeDecode(value.DQ),
+                    P = Base64Helper.SafeDecode(value.P),
+                    InverseQ = Base64Helper.SafeDecode(value.InverseQ),
+                    Q = Base64Helper.SafeDecode(value.Q),
                 };
 
                 _rsa.ImportParameters(keyParams);
