@@ -16,7 +16,7 @@ namespace Hancock
         /// <summary>
         ///     SHA-384
         /// </summary>
-        SHA328 = 328,
+        SHA384 = 384,
 
         /// <summary>
         ///     SHA-512
@@ -29,10 +29,10 @@ namespace Hancock
     /// </summary>
     public class ECDSASigner : ISigner
     {
-        private readonly HashAlgorithmName algorithmName;
-        private bool disposedValue;
-        private ECDsa dsa;
-        private JWK jwk;
+        private readonly HashAlgorithmName _algorithmName;
+        private bool _disposedValue;
+        private ECDsa _dsa;
+        private JWK _jwk;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ECDSASigner"/> class.
@@ -43,26 +43,26 @@ namespace Hancock
             switch (hashSize)
             {
                 case HashSize.SHA256:
-                    algorithmName = HashAlgorithmName.SHA256;
+                    _algorithmName = HashAlgorithmName.SHA256;
                     Curve = ECCurve.NamedCurves.nistP256;
                     CurveName = "P-256";
                     JWSAlgorithm = "ES256";
                     break;
-                case HashSize.SHA328:
-                    algorithmName = HashAlgorithmName.SHA384;
+                case HashSize.SHA384:
+                    _algorithmName = HashAlgorithmName.SHA384;
                     Curve = ECCurve.NamedCurves.nistP384;
                     CurveName = "P-384";
                     JWSAlgorithm = "ES384";
                     break;
                 case HashSize.SHA512:
-                    algorithmName = HashAlgorithmName.SHA512;
+                    _algorithmName = HashAlgorithmName.SHA512;
                     Curve = ECCurve.NamedCurves.nistP521;
                     CurveName = "P-521";
                     JWSAlgorithm = "ES512";
                     break;
             }
 
-            dsa = ECDsa.Create(Curve);
+            _dsa = ECDsa.Create(Curve);
         }
 
         /// <summary>
@@ -76,9 +76,9 @@ namespace Hancock
         public string CurveName { get; set; }
 
         /// <summary>
-        ///     Gets or sets the JWS algorithm
+        ///     Gets the JWS algorithm
         /// </summary>
-        public string JWSAlgorithm { get; set; }
+        public string JWSAlgorithm { get; }
 
         /// <summary>
         ///     Gets the JWK
@@ -87,10 +87,10 @@ namespace Hancock
         {
             get
             {
-                if (jwk is null)
+                if (_jwk is null)
                 {
-                    var keyParams = dsa.ExportParameters(false);
-                    jwk = new JWK
+                    var keyParams = _dsa.ExportParameters(false);
+                    _jwk = new JWK
                     {
                         KeyType = "EC",
                         CurveName = CurveName,
@@ -99,20 +99,20 @@ namespace Hancock
                     };
                 }
 
-                return jwk;
+                return _jwk;
             }
         }
 
         /// <inheritdoc/>
         public byte[] Sign(byte[] data)
         {
-            return dsa.SignData(data, algorithmName);
+            return _dsa.SignData(data, _algorithmName);
         }
 
         /// <inheritdoc/>
         public bool Verify(byte[] data, byte[] signature)
         {
-            return dsa.VerifyData(data, signature, algorithmName);
+            return _dsa.VerifyData(data, signature, _algorithmName);
         }
 
         /// <inheritdoc/>
@@ -125,16 +125,16 @@ namespace Hancock
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
-                    dsa.Dispose();
+                    _dsa.Dispose();
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                dsa = null;
-                disposedValue = true;
+                _dsa = null;
+                _disposedValue = true;
             }
         }
 

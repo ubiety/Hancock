@@ -38,5 +38,35 @@ namespace Hancock.Helpers
 
             return encoded;
         }
+
+        /// <summary>
+        ///     Decode data that was encoded for URLs
+        /// </summary>
+        /// <param name="data">Data to decode</param>
+        /// <returns>Decoded data</returns>
+        public static byte[] SafeDecode(string data)
+        {
+            if (data is null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+
+            data = data.Replace('-', '+');
+            data = data.Replace('_', '/');
+
+            switch (data.Length % 4)
+            {
+                case 0:
+                    break;
+                case 2:
+                    data += "==";
+                    break;
+                case 3:
+                    data += "=";
+                    break;
+            }
+
+            return Convert.FromBase64String(data);
+        }
     }
 }

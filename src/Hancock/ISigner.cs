@@ -8,6 +8,11 @@ namespace Hancock
     public interface ISigner : IDisposable
     {
         /// <summary>
+        ///     Gets the JSON Web Key
+        /// </summary>
+        public JWK JWK { get; }
+
+        /// <summary>
         ///     Sign a payload
         /// </summary>
         /// <param name="data">Payload to sign</param>
