@@ -74,5 +74,17 @@ namespace Hancock
         /// </summary>
         [JsonPropertyName("crit")]
         public List<string> Critical { get; }
+
+        /// <summary>
+        ///     Gets or sets the JWS request url
+        /// </summary>
+        [JsonPropertyName("url")]
+        public Uri Url { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the JWS nonce
+        /// </summary>
+        [JsonPropertyName("nonce")]
+        public string Nonce { get; set; }
     }
 }

@@ -13,6 +13,11 @@ namespace Hancock
         public JWK JWK { get; }
 
         /// <summary>
+        ///     Gets the JSON Web Signature algorithm
+        /// </summary>
+        public string JWSAlgorithm { get; }
+
+        /// <summary>
         ///     Sign a payload
         /// </summary>
         /// <param name="data">Payload to sign</param>

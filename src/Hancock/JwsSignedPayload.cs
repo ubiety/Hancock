@@ -8,7 +8,7 @@ namespace Hancock
         /// <summary>
         ///     Gets the unprotected JWS header
         /// </summary>
-        public object Header { get; init; }
+        public JwsHeader Header { get; init; }
 
         /// <summary>
         ///     Gets the protected JWS header
