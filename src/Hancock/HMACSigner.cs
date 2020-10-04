@@ -5,25 +5,37 @@
     /// </summary>
     public class HMACSigner : ISigner
     {
-        private bool disposedValue;
+        private bool _disposedValue;
 
+        /// <inheritdoc/>
         public JWK JWK => throw new System.NotImplementedException();
 
+        /// <inheritdoc/>
         public string JWSAlgorithm => throw new System.NotImplementedException();
 
+        /// <inheritdoc/>
         public byte[] Sign(byte[] data)
         {
             throw new System.NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public bool Verify(byte[] data, byte[] signature)
         {
             throw new System.NotImplementedException();
         }
 
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            System.GC.SuppressFinalize(this);
+        }
+
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
@@ -32,7 +44,7 @@
 
                 // TODO: free unmanaged resources (unmanaged objects) and override finalizer
                 // TODO: set large fields to null
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 
@@ -42,12 +54,5 @@
         //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
         //     Dispose(disposing: false);
         // }
-
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            System.GC.SuppressFinalize(this);
-        }
     }
 }

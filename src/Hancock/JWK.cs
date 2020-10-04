@@ -127,5 +127,11 @@ namespace Hancock
         /// </summary>
         [JsonPropertyName("q")]
         public string Q { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a flat key
+        /// </summary>
+        [JsonPropertyName("k")]
+        public string Key { get; set; }
     }
 }
