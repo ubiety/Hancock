@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 using Hancock.Helpers;
 
 namespace Hancock
@@ -17,7 +18,8 @@ namespace Hancock
         ///     Initializes a new instance of the <see cref="ECDSASigner"/> class.
         /// </summary>
         /// <param name="hashSize">Hash size of the curve</param>
-        public ECDSASigner(HashSize hashSize)
+        /// <param name="jwk">JSON Web Key to use for signature</param>
+        public ECDSASigner(HashSize hashSize, JWK jwk)
         {
             switch (hashSize)
             {
@@ -42,6 +44,7 @@ namespace Hancock
             }
 
             _dsa = ECDsa.Create(Curve);
+            JWK = jwk;
         }
 
         /// <summary>
@@ -60,7 +63,7 @@ namespace Hancock
         public string JWSAlgorithm { get; }
 
         /// <summary>
-        ///     Gets the JWK
+        ///     Gets or sets the JWK
         /// </summary>
         public JWK JWK
         {
@@ -79,6 +82,29 @@ namespace Hancock
                 }
 
                 return _jwk;
+            }
+
+            set
+            {
+                if (value is null)
+                {
+                    throw new ArgumentNullException(nameof(JWK));
+                }
+
+                var keyParams = new ECParameters
+                {
+                    D = Base64Helper.SafeDecode(value.D),
+                    Q = new ECPoint
+                    {
+                        X = Base64Helper.SafeDecode(value.X),
+                        Y = Base64Helper.SafeDecode(value.Y),
+                    },
+                };
+
+                CurveName = value.CurveName;
+
+                _dsa.ImportParameters(keyParams);
+                _jwk = value;
             }
         }
 

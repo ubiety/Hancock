@@ -20,8 +20,9 @@ namespace Hancock
         ///     Initializes a new instance of the <see cref="RSASigner"/> class
         /// </summary>
         /// <param name="hashSize">Hash size of the key</param>
+        /// <param name="jwk">JSON Web Key to use for the signature</param>
         /// <param name="pss">A value indicating whether to use PSS padding</param>
-        public RSASigner(HashSize hashSize, bool pss)
+        public RSASigner(HashSize hashSize, JWK jwk, bool pss)
         {
             switch (hashSize)
             {
@@ -45,6 +46,7 @@ namespace Hancock
             }
 
             _rsa = new RSACryptoServiceProvider(KeySize);
+            JWK = jwk;
         }
 
         /// <summary>

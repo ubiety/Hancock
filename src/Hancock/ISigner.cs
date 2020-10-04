@@ -8,9 +8,9 @@ namespace Hancock
     public interface ISigner : IDisposable
     {
         /// <summary>
-        ///     Gets the JSON Web Key
+        ///     Gets or sets the JSON Web Key
         /// </summary>
-        public JWK JWK { get; }
+        public JWK JWK { get; set; }
 
         /// <summary>
         ///     Gets the JSON Web Signature algorithm
