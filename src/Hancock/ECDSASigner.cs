@@ -4,27 +4,6 @@ using Hancock.Helpers;
 namespace Hancock
 {
     /// <summary>
-    ///     ECDSA hash size
-    /// </summary>
-    public enum HashSize
-    {
-        /// <summary>
-        ///     SHA-256
-        /// </summary>
-        SHA256 = 256,
-
-        /// <summary>
-        ///     SHA-384
-        /// </summary>
-        SHA384 = 384,
-
-        /// <summary>
-        ///     SHA-512
-        /// </summary>
-        SHA512 = 512,
-    }
-
-    /// <summary>
     ///     Signer that uses ECDSA algorithms
     /// </summary>
     public class ECDSASigner : ISigner
