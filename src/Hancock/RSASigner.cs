@@ -9,7 +9,8 @@ namespace Hancock
     /// </summary>
     public class RSASigner : ISigner
     {
-        private HashAlgorithm _hashAlgorithm;
+        private readonly HashAlgorithmName _hashAlgorithm;
+        private readonly RSASignaturePadding _signaturePadding = RSASignaturePadding.Pkcs1;
         private RSACryptoServiceProvider _rsa;
         private bool _disposedValue;
         private JWK _jwk;
@@ -19,22 +20,28 @@ namespace Hancock
         ///     Initializes a new instance of the <see cref="RSASigner"/> class
         /// </summary>
         /// <param name="hashSize">Hash size of the key</param>
-        public RSASigner(HashSize hashSize)
+        /// <param name="pss">A value indicating whether to use PSS padding</param>
+        public RSASigner(HashSize hashSize, bool pss)
         {
             switch (hashSize)
             {
                 case HashSize.SHA256:
-                    _hashAlgorithm = SHA256.Create();
-                    JWSAlgorithm = "RS256";
+                    _hashAlgorithm = HashAlgorithmName.SHA256;
+                    JWSAlgorithm = pss ? "PS256" : "RS256";
                     break;
                 case HashSize.SHA384:
-                    _hashAlgorithm = SHA384.Create();
-                    JWSAlgorithm = "RS384";
+                    _hashAlgorithm = HashAlgorithmName.SHA384;
+                    JWSAlgorithm = pss ? "PS384" : "RS384";
                     break;
                 case HashSize.SHA512:
-                    _hashAlgorithm = SHA512.Create();
-                    JWSAlgorithm = "RS512";
+                    _hashAlgorithm = HashAlgorithmName.SHA512;
+                    JWSAlgorithm = pss ? "PS512" : "RS512";
                     break;
+            }
+
+            if (pss)
+            {
+                _signaturePadding = RSASignaturePadding.Pss;
             }
 
             _rsa = new RSACryptoServiceProvider(KeySize);
@@ -110,13 +117,13 @@ namespace Hancock
         /// <inheritdoc/>
         public byte[] Sign(byte[] data)
         {
-            return _rsa.SignData(data, _hashAlgorithm);
+            return _rsa.SignData(data, _hashAlgorithm, _signaturePadding);
         }
 
         /// <inheritdoc/>
         public bool Verify(byte[] data, byte[] signature)
         {
-            return _rsa.VerifyData(data, _hashAlgorithm, signature);
+            return _rsa.VerifyData(data, signature, _hashAlgorithm, _signaturePadding);
         }
 
         /// <inheritdoc/>
@@ -134,13 +141,11 @@ namespace Hancock
                 if (disposing)
                 {
                     _rsa.Dispose();
-                    _hashAlgorithm.Dispose();
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override finalizer
                 // TODO: set large fields to null
                 _rsa = null;
-                _hashAlgorithm = null;
                 _disposedValue = true;
             }
         }
